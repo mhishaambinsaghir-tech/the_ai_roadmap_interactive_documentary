@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The AI Roadmap: An Interactive Documentary</title>
+    <!-- Tailwind CSS for high-fidelity responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#030712',
+                        'card-bg': '#0f172a',
+                        'card-border': '#1e293b',
+                        cyanAccent: '#06b6d4',
+                        emeraldAccent: '#10b981',
+                        purpleAccent: '#8b5cf6',
+                        roseAccent: '#f43f5e',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Segoe UI', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030712;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+        
+        @keyframes pulseSlow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        .pulse-slow {
+            animation: pulseSlow 4s infinite ease-in-out;
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(30, 41, 59, 0.7);
+        }
+
+        .neon-glow-cyan {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+        }
+        .neon-glow-purple {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+        }
+        .neon-glow-emerald {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-dark text-slate-100 font-sans selection:bg-cyanAccent selection:text-dark antialiased">
+
+    <!-- Top Horizontal Scroll Progress Bar -->
+    <div id="progress-container" class="fixed top-0 left-0 w-full h-[6px] bg-slate-900/80 z-50">
+        <div id="progress-bar" class="h-full w-0 bg-gradient-to-r from-cyanAccent via-purpleAccent to-emeraldAccent transition-all duration-75 ease-out"></div>
+    </div>
+
+    <!-- HERO HEADER WITH CANVAS BACKGROUND -->
+    <header id="hero" class="relative min-h-screen h-screen flex flex-col justify-center items-center overflow-hidden px-4">
+        <!-- Interactive Background Canvas -->
+        <canvas id="neuralCanvas" class="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-auto"></canvas>
+        
+        <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-dark/10 pointer-events-none"></div>
+
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyanAccent/10 rounded-full blur-3xl pointer-events-none pulse-slow"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purpleAccent/10 rounded-full blur-3xl pointer-events-none pulse-slow" style="animation-delay: 2s;"></div>
+
+        <!-- Content Frame -->
+        <div class="relative z-10 text-center max-w-4xl px-4 pointer-events-none">
+            <span class="inline-block px-4 py-1.5 rounded-full bg-slate-900/80 border border-cyanAccent/30 text-cyanAccent text-xs font-mono uppercase tracking-widest mb-6">
+                <i class="fa-solid fa-play-circle mr-1"></i> Interactive Documentary Experience
+            </span>
+            <h1 class="text-5xl md:text-8xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-white via-cyanAccent to-emeraldAccent -webkit-background-clip-text text-transparent drop-shadow-sm select-none">
+                The AI Roadmap
+            </h1>
+            <p class="text-xl md:text-3xl text-slate-300 font-light mb-4 max-w-2xl mx-auto">
+                A Complete Guide for Students Entering Artificial Intelligence
+            </p>
+            <p id="typing-sub" class="text-sm md:text-base text-emeraldAccent font-mono tracking-wide max-w-xl mx-auto mb-10 h-6">
+                <!-- Typed dynamic content via JS -->
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="#chapter1" class="pointer-events-auto w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-cyanAccent to-emeraldAccent hover:from-cyanAccent hover:to-cyanAccent text-dark font-bold rounded-xl shadow-lg shadow-cyanAccent/10 transform hover:-translate-y-0.5 transition duration-200">
+                    <i class="fa-solid fa-compass mr-2"></i>Enter the Journey
+                </a>
+                <a href="#chapter4" class="pointer-events-auto w-full sm:w-auto px-8 py-4 bg-slate-900/95 hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold rounded-xl transition duration-200">
+                    Skip to Pathways
+                </a>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-center pointer-events-none">
+            <div class="text-xs font-mono tracking-widest uppercase text-slate-500 mb-2">Scroll To Begin</div>
+            <i class="fa-solid fa-chevron-down text-cyanAccent animate-bounce text-lg"></i>
+        </div>
+    </header>
+
+    <!-- CHAPTER 1: WHAT IS AI? -->
+    <section id="chapter1" class="relative py-24 border-b border-slate-800 bg-slate-950/40 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                
+                <div class="lg:col-span-6">
+                    <span class="text-xs font-mono uppercase tracking-widest text-cyanAccent block mb-3">Chapter 01</span>
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6">What is Artificial Intelligence?</h2>
+                    
+                    <p class="text-slate-300 leading-relaxed text-lg mb-4">
+                        Imagine traditional computer programs as a <strong class="text-white">strict cooking recipe</strong>. If the computer follows the recipe steps exactly, it makes a cake. But if something unexpected happens, the program crashes.
+                    </p>
+                    
+                    <p class="text-slate-300 leading-relaxed text-lg mb-6">
+                        <span class="text-cyanAccent font-semibold">Artificial Intelligence (AI)</span> is different. Instead of a strict recipe, you show the computer <strong class="text-white">1,000 pictures of cakes</strong> and let it learn the patterns of what a cake looks like on its own!
+                    </p>
+
+                    <!-- Illustrative Conceptual Photo to ground the chapter -->
+                    <div class="rounded-2xl overflow-hidden border border-slate-800 shadow-2xl mb-8 relative group">
+                        <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80" alt="Robotics and artificial intelligence concept" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-85"></div>
+                        <span class="absolute bottom-4 left-4 text-xs font-mono text-slate-400">AI finds repeating mathematical patterns to solve complex tasks</span>
+                    </div>
+
+                    <!-- Interactive Task Grid -->
+                    <p class="text-xs font-mono uppercase tracking-wider text-slate-400 mb-3">Things AI excels at learning:</p>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                        <div class="flex items-center gap-3 p-3 bg-card-bg/60 rounded-xl border border-card-border hover:border-cyanAccent/50 transition">
+                            <i class="fa-solid fa-eye text-cyanAccent text-lg"></i>
+                            <span class="text-sm font-medium text-slate-200">Recognizing Faces</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-card-bg/60 rounded-xl border border-card-border hover:border-cyanAccent/50 transition">
+                            <i class="fa-solid fa-car text-cyanAccent text-lg"></i>
+                            <span class="text-sm font-medium text-slate-200">Driving Vehicles</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-card-bg/60 rounded-xl border border-card-border hover:border-cyanAccent/50 transition">
+                            <i class="fa-solid fa-comments text-cyanAccent text-lg"></i>
+                            <span class="text-sm font-medium text-slate-200">Talking with You</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DIAGRAM: TRADITIONAL VS MACHINE LEARNING -->
+                <div class="lg:col-span-6 space-y-6">
+                    <div class="bg-card-bg/40 p-6 rounded-3xl border border-card-border shadow-2xl glass-card">
+                        <h3 class="text-xl font-bold text-white mb-6 text-center">Comparing Programming Paradigms</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
+                            <!-- Left: Traditional Paradigm -->
+                            <div class="p-4 bg-slate-950/80 rounded-2xl border border-slate-800 text-center flex flex-col justify-between">
+                                <span class="text-[10px] font-mono text-roseAccent uppercase font-bold tracking-widest">Traditional Programming</span>
+                                <div class="my-6 space-y-3">
+                                    <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-xs font-mono">1. Raw Input Data</div>
+                                    <div class="text-roseAccent text-sm font-mono"><i class="fa-solid fa-plus"></i></div>
+                                    <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-xs font-mono text-roseAccent font-semibold">2. Hand-Written Rules</div>
+                                </div>
+                                <div class="bg-roseAccent/10 text-roseAccent border border-roseAccent/20 p-3 rounded-xl text-xs font-mono">
+                                    <i class="fa-solid fa-chevron-right mr-1.5"></i>Resulting Output
+                                </div>
+                            </div>
+
+                            <!-- Right: ML Paradigm -->
+                            <div class="p-4 bg-slate-950/80 rounded-2xl border border-emeraldAccent/20 text-center flex flex-col justify-between">
+                                <span class="text-[10px] font-mono text-emeraldAccent uppercase font-bold tracking-widest">Machine Learning (AI)</span>
+                                <div class="my-6 space-y-3">
+                                    <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-xs font-mono">1. Raw Input Data</div>
+                                    <div class="text-emeraldAccent text-sm font-mono"><i class="fa-solid fa-plus"></i></div>
+                                    <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-xs font-mono text-emeraldAccent font-semibold">2. Desired Answers</div>
+                                </div>
+                                <div class="bg-emeraldAccent/10 text-emeraldAccent border border-emeraldAccent/20 p-3 rounded-xl text-xs font-mono">
+                                    <i class="fa-solid fa-arrows-spin mr-1.5 animate-spin"></i>Self-Learned Rules
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Is NOT Magic Interactive Formula -->
+                    <div class="bg-card-bg/40 p-8 rounded-3xl border border-card-border shadow-2xl glass-card relative overflow-hidden">
+                        <div class="absolute -right-20 -top-20 w-48 h-48 bg-cyanAccent/10 rounded-full blur-3xl"></div>
+                        
+                        <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-wand-magic-stroke text-roseAccent"></i>
+                            AI is NOT Magic
+                        </h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Strip away the corporate marketing buzzwords. AI is not alive; it is simply a combination of <strong>Data</strong>, <strong>Algorithms</strong>, and <strong>Computer power</strong>. Click each ingredient below to activate the learning loop:
+                        </p>
+
+                        <!-- Interactive Equation Diagram -->
+                        <div class="p-6 bg-slate-950/90 rounded-2xl border border-slate-800 text-center relative mb-6 neon-glow-cyan">
+                            <div class="flex flex-wrap justify-center items-center gap-2.5 text-xs font-mono md:text-sm">
+                                <button id="eq-data" onclick="toggleEqComponent('data')" class="px-3 py-2 bg-slate-900 border border-slate-800 text-slate-400 hover:text-cyanAccent rounded-lg transition-all duration-300">
+                                    <i class="fa-solid fa-database mr-1.5"></i>1. Great Data
+                                </button>
+                                <span class="text-slate-600 font-bold">+</span>
+                                <button id="eq-alg" onclick="toggleEqComponent('alg')" class="px-3 py-2 bg-slate-900 border border-slate-800 text-slate-400 hover:text-purpleAccent rounded-lg transition-all duration-300">
+                                    <i class="fa-solid fa-code-fork mr-1.5"></i>2. Smart Math
+                                </button>
+                                <span class="text-slate-600 font-bold">+</span>
+                                <button id="eq-comp" onclick="toggleEqComponent('comp')" class="px-3 py-2 bg-slate-900 border border-slate-800 text-slate-400 hover:text-emeraldAccent rounded-lg transition-all duration-300">
+                                    <i class="fa-solid fa-microchip mr-1.5"></i>3. Strong GPU Chips
+                                </button>
+                                <span class="text-slate-600 font-bold">=</span>
+                                <span id="eq-result" class="px-4 py-2 bg-slate-900 text-slate-600 border border-slate-800 font-extrabold rounded-lg shadow-md transition-all duration-300">
+                                    Working AI
+                                </span>
+                            </div>
+                            
+                            <!-- Visual Engine Spinning Output Diagram -->
+                            <div class="mt-6 flex justify-center items-center gap-8 relative h-16">
+                                <div id="cog-left" class="text-slate-700 text-3xl transition-transform duration-700"><i class="fa-solid fa-gear"></i></div>
+                                <div id="cog-right" class="text-slate-700 text-4xl transition-transform duration-700" style="animation-direction: reverse;"><i class="fa-solid fa-gears"></i></div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Quick Quiz Box -->
+                        <div class="bg-slate-900/50 p-5 rounded-2xl border border-slate-800/80">
+                            <p class="text-xs font-mono uppercase tracking-wider text-slate-400 mb-3">Self-check diagnostic</p>
+                            <h4 class="text-sm font-semibold text-slate-200 mb-4">When ChatGPT answers your question, is it "thinking" like a human?</h4>
+                            <div class="flex flex-col gap-2.5">
+                                <button onclick="checkHeroQuiz(this, false)" class="w-full text-left p-3.5 rounded-xl bg-slate-950 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 transition duration-150 text-sm flex justify-between items-center group">
+                                    <span>Yes, it reads my text and truly understands my feelings.</span>
+                                    <i class="fa-regular fa-circle text-slate-600 group-hover:text-cyanAccent transition-colors"></i>
+                                </button>
+                                <button onclick="checkHeroQuiz(this, true)" class="w-full text-left p-3.5 rounded-xl bg-slate-950 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 transition duration-150 text-sm flex justify-between items-center group">
+                                    <span>No, it is just calculating which word is most likely to come next.</span>
+                                    <i class="fa-regular fa-circle text-slate-600 group-hover:text-emeraldAccent transition-colors"></i>
+                                </button>
+                            </div>
+                            <p id="hero-quiz-response" class="mt-4 text-xs font-mono hidden"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CHAPTER 2: TYPES OF AI -->
+    <section id="chapter2" class="py-24 border-b border-slate-800 bg-dark relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-mono uppercase tracking-widest text-purpleAccent block mb-3">Chapter 02</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">The AI Capability Spectrum</h2>
+                <p class="text-slate-400">AI isn't just one single technology. It is grouped into three distinct milestones based on how adaptable it is:</p>
+            </div>
+
+            <!-- DIAGRAM: THE CONTINUUM MAP -->
+            <div class="mb-16 bg-card-bg border border-card-border p-6 rounded-3xl relative overflow-hidden glass-card max-w-4xl mx-auto">
+                <h3 class="text-lg font-bold text-slate-200 mb-6 text-center font-mono">The AI Evolution Scale</h3>
+                <div class="relative h-20 bg-slate-950 rounded-2xl flex items-center justify-between px-6 border border-slate-800">
+                    <div class="absolute left-0 top-0 h-full bg-gradient-to-r from-cyanAccent/10 via-purpleAccent/10 to-roseAccent/10 rounded-2xl" style="width: 100%;"></div>
+                    
+                    <div class="z-10 flex flex-col items-center">
+                        <div class="w-6 h-6 rounded-full bg-cyanAccent text-slate-950 flex items-center justify-center font-bold text-xs">1</div>
+                        <span class="text-xs font-mono font-bold text-cyanAccent mt-2">ANI</span>
+                    </div>
+                    <div class="w-full h-1 bg-gradient-to-r from-cyanAccent to-purpleAccent z-0 mx-2"></div>
+                    <div class="z-10 flex flex-col items-center">
+                        <div class="w-6 h-6 rounded-full bg-purpleAccent text-slate-950 flex items-center justify-center font-bold text-xs">2</div>
+                        <span class="text-xs font-mono font-bold text-purpleAccent mt-2">AGI</span>
+                    </div>
+                    <div class="w-full h-1 bg-gradient-to-r from-purpleAccent to-roseAccent z-0 mx-2"></div>
+                    <div class="z-10 flex flex-col items-center">
+                        <div class="w-6 h-6 rounded-full bg-roseAccent/30 border border-roseAccent text-roseAccent flex items-center justify-center font-bold text-xs">3</div>
+                        <span class="text-xs font-mono font-bold text-roseAccent mt-2">ASI</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="group relative bg-card-bg border border-card-border hover:border-cyanAccent/50 rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 shadow-xl flex flex-col justify-between glass-card">
+                    <div>
+                        <div class="w-12 h-12 bg-cyanAccent/10 border border-cyanAccent/20 text-cyanAccent rounded-xl flex items-center justify-center text-xl mb-6 group-hover:bg-cyanAccent group-hover:text-dark transition-colors duration-300">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Narrow AI (ANI)</h3>
+                        <p class="text-xs font-mono text-cyanAccent mb-4 uppercase tracking-widest font-bold">The "One-Trick Pony" (Present Day)</p>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                            This is the only type of AI that exists today. It is incredibly good at <span class="text-cyanAccent font-semibold">one specific task</span>, like identifying suspicious credit card activity or recommending your next song on Spotify. However, a chess AI cannot read a resume, and ChatGPT cannot drive a car.
+                        </p>
+                    </div>
+                    <div>
+                        <!-- Interactive Progress Indicator / Visualization -->
+                        <div class="mb-6 bg-slate-900/80 p-3.5 rounded-xl border border-slate-800">
+                            <div class="flex justify-between text-[11px] font-mono text-slate-400 mb-2">
+                                <span>Real-World Availability</span>
+                                <span class="text-cyanAccent">100% (Everyday Use)</span>
+                            </div>
+                            <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden">
+                                <div class="bg-cyanAccent h-full w-full"></div>
+                            </div>
+                        </div>
+                        <div class="border-t border-slate-800 pt-4">
+                            <p class="text-xs font-mono text-slate-500 uppercase mb-2">Real Examples you use today:</p>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2 py-1 bg-slate-950 border border-slate-800 rounded-md text-[11px] text-slate-400">Google Maps Navigation</span>
+                                <span class="px-2 py-1 bg-slate-950 border border-slate-800 rounded-md text-[11px] text-slate-400">Netflix Suggestions</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="group relative bg-card-bg border border-card-border hover:border-purpleAccent/50 rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 shadow-xl flex flex-col justify-between glass-card">
+                    <div>
+                        <div class="w-12 h-12 bg-purpleAccent/10 border border-purpleAccent/20 text-purpleAccent rounded-xl flex items-center justify-center text-xl mb-6 group-hover:bg-purpleAccent group-hover:text-dark transition-colors duration-300">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">General AI (AGI)</h3>
+                        <p class="text-xs font-mono text-purpleAccent mb-4 uppercase tracking-widest font-bold">The "Human Brain" (Not Invented Yet)</p>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                            A hypothetical machine that has a full, flexible brain. It could learn to play guitar, understand economics, solve coding bugs, and adapt to *any* situation exactly like a human being, using the exact same underlying logic model.
+                        </p>
+                    </div>
+                    <div>
+                        <!-- Interactive Progress Indicator -->
+                        <div class="mb-6 bg-slate-900/80 p-3.5 rounded-xl border border-slate-800">
+                            <div class="flex justify-between text-[11px] font-mono text-slate-400 mb-2">
+                                <span>Real-World Availability</span>
+                                <span class="text-purpleAccent">0% (In Research Labs Only)</span>
+                            </div>
+                            <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden">
+                                <div class="bg-purpleAccent h-full w-[8%] animate-pulse"></div>
+                            </div>
+                        </div>
+                        <div class="border-t border-slate-800 pt-4">
+                            <p class="text-xs font-mono text-slate-500 uppercase mb-2">Estimated Arrival Timeline</p>
+                            <span class="inline-block px-2.5 py-1 bg-purpleAccent/10 border border-purpleAccent/20 text-purpleAccent rounded-md text-xs font-semibold">Vigorous Debate (5 to 30 years)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="group relative bg-card-bg border border-card-border hover:border-roseAccent/50 rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 shadow-xl flex flex-col justify-between glass-card">
+                    <div>
+                        <div class="w-12 h-12 bg-roseAccent/10 border border-roseAccent/20 text-roseAccent rounded-xl flex items-center justify-center text-xl mb-6 group-hover:bg-roseAccent group-hover:text-dark transition-colors duration-300">
+                            <i class="fa-solid fa-atom"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Super AI (ASI)</h3>
+                        <p class="text-xs font-mono text-roseAccent mb-4 uppercase tracking-widest font-bold">The "Omniscient Machine" (Sci-Fi)</p>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                            The theoretical peak where a computer's capability leaps ahead of the collective human race. It wouldn't just write emails; it would instantly solve unsolved physics equations, predict planetary challenges, and design its own descendants.
+                        </p>
+                    </div>
+                    <div>
+                        <!-- Interactive Progress Indicator -->
+                        <div class="mb-6 bg-slate-900/80 p-3.5 rounded-xl border border-slate-800">
+                            <div class="flex justify-between text-[11px] font-mono text-slate-400 mb-2">
+                                <span>Real-World Availability</span>
+                                <span class="text-roseAccent">0% (Pure Theory &amp; Fiction)</span>
+                            </div>
+                            <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden">
+                                <div class="bg-slate-800 h-full w-0"></div>
+                            </div>
+                        </div>
+                        <div class="border-t border-slate-800 pt-4">
+                            <p class="text-xs font-mono text-slate-500 uppercase mb-2">Current Status</p>
+                            <span class="inline-block px-2.5 py-1 bg-roseAccent/10 border border-roseAccent/20 text-roseAccent rounded-md text-xs font-semibold">Philosophical Concept Only</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHAPTER 3: WHERE IS AI USED? -->
+    <section id="chapter3" class="py-24 border-b border-slate-800 bg-slate-950/50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-mono uppercase tracking-widest text-emeraldAccent block mb-3">Chapter 03</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">AI Industry Integration Explained</h2>
+                <p class="text-slate-400">How do real businesses translate abstract math models into working products? <strong class="text-emeraldAccent">Click a card below</strong> to read a detailed step-by-step walkthrough of exactly how AI operates in that domain:</p>
+            </div>
+
+            <!-- Expanded grid of industry cards -->
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <button onclick="openIndustryDrawer('healthcare')" class="text-left bg-card-bg hover:bg-slate-900 border border-card-border hover:border-cyanAccent p-6 rounded-2xl transition duration-200 group focus:outline-none glass-card">
+                    <div class="text-cyanAccent text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-stethoscope"></i></div>
+                    <h4 class="text-white font-bold text-lg mb-1">Healthcare &amp; Medicine</h4>
+                    <p class="text-slate-500 text-xs font-mono uppercase">Tumor Detection</p>
+                </button>
+
+                <button onclick="openIndustryDrawer('education')" class="text-left bg-card-bg hover:bg-slate-900 border border-card-border hover:border-cyanAccent p-6 rounded-2xl transition duration-200 group focus:outline-none glass-card">
+                    <div class="text-cyanAccent text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <h4 class="text-white font-bold text-lg mb-1">Education</h4>
+                    <p class="text-slate-500 text-xs font-mono uppercase">Adaptive Student Tutoring</p>
+                </button>
+
+                <button onclick="openIndustryDrawer('finance')" class="text-left bg-card-bg hover:bg-slate-900 border border-card-border hover:border-cyanAccent p-6 rounded-2xl transition duration-200 group focus:outline-none glass-card">
+                    <div class="text-cyanAccent text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-chart-line"></i></div>
+                    <h4 class="text-white font-bold text-lg mb-1">Finance</h4>
+                    <p class="text-slate-500 text-xs font-mono uppercase">Fraud Defense</p>
+                </button>
+
+                <button onclick="openIndustryDrawer('gaming')" class="text-left bg-card-bg hover:bg-slate-900 border border-card-border hover:border-cyanAccent p-6 rounded-2xl transition duration-200 group focus:outline-none glass-card">
+                    <div class="text-cyanAccent text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-gamepad"></i></div>
+                    <h4 class="text-white font-bold text-lg mb-1">Gaming</h4>
+                    <p class="text-slate-500 text-xs font-mono uppercase">Adaptive Enemies &amp; Assets</p>
+                </button>
+
+                <button onclick="openIndustryDrawer('agriculture')" class="text-left bg-card-bg hover:bg-slate-900 border border-card-border hover:border-cyanAccent p-6 rounded-2xl transition duration-200 group focus:outline-none glass-card">
+                    <div class="text-cyanAccent text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-seedling"></i></div>
+                    <h4 class="text-white font-bold text-lg mb-1">Agriculture</h4>
+                    <p class="text-slate-500 text-xs font-mono uppercase">Precision Crops</p>
+                </button>
+
+                <button onclick="openIndustryDrawer('cybersecurity')" class="text-left bg-card-bg hover:bg-slate-900 border border-card-border hover:border-cyanAccent p-6 rounded-2xl transition duration-200 group focus:outline-none glass-card">
+                    <div class="text-cyanAccent text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h4 class="text-white font-bold text-lg mb-1">Cybersecurity</h4>
+                    <p class="text-slate-500 text-xs font-mono uppercase">Intrusion Shielding</p>
+                </button>
+
+                <button onclick="openIndustryDrawer('robotics')" class="text-left bg-card-bg hover:bg-slate-900 border border-card-border hover:border-cyanAccent p-6 rounded-2xl transition duration-200 group focus:outline-none glass-card">
+                    <div class="text-cyanAccent text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-robot"></i></div>
+                    <h4 class="text-white font-bold text-lg mb-1">Robotics &amp; Cars</h4>
+                    <p class="text-slate-500 text-xs font-mono uppercase">Spatial Pathfinding</p>
+                </button>
+
+                <button onclick="openIndustryDrawer('marketing')" class="text-left bg-card-bg hover:bg-slate-900 border border-card-border hover:border-cyanAccent p-6 rounded-2xl transition duration-200 group focus:outline-none glass-card">
+                    <div class="text-cyanAccent text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-bullhorn"></i></div>
+                    <h4 class="text-white font-bold text-lg mb-1">Marketing &amp; Retail</h4>
+                    <p class="text-slate-500 text-xs font-mono uppercase">Customer Prediction</p>
+                </button>
+
+                <button onclick="openIndustryDrawer('programming')" class="text-left bg-card-bg hover:bg-slate-900 border border-card-border hover:border-cyanAccent p-6 rounded-2xl transition duration-200 group focus:outline-none glass-card">
+                    <div class="text-cyanAccent text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-terminal"></i></div>
+                    <h4 class="text-white font-bold text-lg mb-1">Programming</h4>
+                    <p class="text-slate-500 text-xs font-mono uppercase">Logic Co-Pilots</p>
+                </button>
+
+                <button onclick="openIndustryDrawer('law')" class="text-left bg-card-bg hover:bg-slate-900 border border-card-border hover:border-cyanAccent p-6 rounded-2xl transition duration-200 group focus:outline-none glass-card">
+                    <div class="text-cyanAccent text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-gavel"></i></div>
+                    <h4 class="text-white font-bold text-lg mb-1">Law &amp; Rules</h4>
+                    <p class="text-slate-500 text-xs font-mono uppercase">Semantic Extraction</p>
+                </button>
+            </div>
+
+            <!-- Dynamic sliding info box drawer -->
+            <div id="industry-drawer" class="mt-8 hidden p-8 bg-slate-900 border border-slate-700 rounded-3xl relative neon-glow-cyan transition-all duration-300">
+                <button onclick="closeIndustryDrawer()" class="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+                <div id="industry-content"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHAPTER 4: CHOOSE YOUR PATH FLOWCHART -->
+    <section id="chapter4" class="py-24 border-b border-slate-800 bg-dark overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-xs font-mono uppercase tracking-widest text-cyanAccent block mb-3">Chapter 04</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Choose Your AI Path</h2>
+                <p class="text-slate-400 mb-6">You don't need to be an academic ML researcher to build incredible AI solutions. Choose your focus:</p>
+            </div>
+
+            <!-- DIAGNOSTIC FLOWCHART WIZARD -->
+            <div class="bg-card-bg border border-card-border rounded-3xl p-8 max-w-4xl mx-auto shadow-2xl relative overflow-hidden glass-card neon-glow-cyan">
+                
+                <!-- Beautiful SVG connection tree representing dynamic tracks -->
+                <div class="mb-8 hidden md:block">
+                    <svg class="w-full h-32" viewBox="0 0 800 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#06b6d4" />
+                                <stop offset="50%" stop-color="#8b5cf6" />
+                                <stop offset="100%" stop-color="#10b981" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Connection Vectors -->
+                        <path id="path-vector-1" d="M 400,10 C 400,50 150,50 150,90" stroke="#1e293b" stroke-width="3" stroke-dasharray="5 5" />
+                        <path id="path-vector-2" d="M 400,10 L 400,90" stroke="#1e293b" stroke-width="3" stroke-dasharray="5 5" />
+                        <path id="path-vector-3" d="M 400,10 C 400,50 650,50 650,90" stroke="#1e293b" stroke-width="3" stroke-dasharray="5 5" />
+                        
+                        <!-- Intersecting Nodes -->
+                        <circle cx="400" cy="10" r="8" fill="#1e293b" id="flow-node-root" class="transition-all duration-300" />
+                        <circle cx="150" cy="90" r="8" fill="#1e293b" id="flow-node-left" class="transition-all duration-300" />
+                        <circle cx="400" cy="90" r="8" fill="#1e293b" id="flow-node-mid" class="transition-all duration-300" />
+                        <circle cx="650" cy="90" r="8" fill="#1e293b" id="flow-node-right" class="transition-all duration-300" />
+                        
+                        <text x="400" y="30" fill="#64748b" font-family="monospace" font-size="10" text-anchor="middle">YOUR TECHNOLOGY DECISION TREE</text>
+                    </svg>
+                </div>
+
+                <!-- Wizard Interactive Steps -->
+                <div id="pathfinder-step-1">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-cyanAccent text-dark font-mono text-sm font-bold">1</span>
+                        What is your primary strategic goal?
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <button onclick="setPathfinderAns(1, 'use')" class="p-6 text-left rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyanAccent hover:bg-slate-900/80 transition duration-150 group">
+                            <h4 class="font-bold text-white mb-2 group-hover:text-cyanAccent transition">No-Code Leverage &amp; Workflows</h4>
+                            <p class="text-xs text-slate-400">I want to integrate LLMs, create automated workflows, and build systems using existing tools.</p>
+                        </button>
+                        <button onclick="setPathfinderAns(1, 'build')" class="p-6 text-left rounded-2xl bg-slate-900 border border-slate-800 hover:border-purpleAccent hover:bg-slate-900/80 transition duration-150 group">
+                            <h4 class="font-bold text-white mb-2 group-hover:text-purpleAccent transition">Application &amp; Software Dev</h4>
+                            <p class="text-xs text-slate-400">I want to connect APIs, orchestrate vector databases, construct LLM layers, and build software products.</p>
+                        </button>
+                        <button onclick="setPathfinderAns(1, 'math')" class="p-6 text-left rounded-2xl bg-slate-900 border border-slate-800 hover:border-emeraldAccent hover:bg-slate-900/80 transition duration-150 group">
+                            <h4 class="font-bold text-white mb-2 group-hover:text-emeraldAccent transition">Mathematical Training Theory</h4>
+                            <p class="text-xs text-slate-400">I want to dive deep into matrix multiplication, tune custom loss weights, configure deep CNN layers, and train models.</p>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="pathfinder-step-2" class="hidden animate-fade-in">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-purpleAccent text-dark font-mono text-sm font-bold">2</span>
+                        Are you comfortable with calculus &amp; rigorous stats?
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button onclick="setPathfinderAns(2, 'high')" class="p-6 text-left rounded-2xl bg-slate-900 border border-slate-800 hover:border-purpleAccent hover:bg-slate-900/80 transition duration-150">
+                            <h4 class="font-bold text-white mb-2">Yes, I love math mechanics</h4>
+                            <p class="text-xs text-slate-400">I want to evaluate backprop limits, adjust layer weights directly, and read scientific papers.</p>
+                        </button>
+                        <button onclick="setPathfinderAns(2, 'low')" class="p-6 text-left rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyanAccent hover:bg-slate-900/80 transition duration-150">
+                            <h4 class="font-bold text-white mb-2">No, I prefer programmatic design</h4>
+                            <p class="text-xs text-slate-400">I want to coordinate functional APIs, deploy docker systems, and connect datastores.</p>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="pathfinder-result" class="hidden text-center p-6 animate-fade-in">
+                    <div class="w-16 h-16 rounded-full bg-cyanAccent/10 border border-cyanAccent/20 text-cyanAccent flex items-center justify-center text-3xl mx-auto mb-4">
+                        <i class="fa-solid fa-compass-drafting animate-pulse"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2" id="path-title-result">Configuring your roadmap...</h3>
+                    <p class="text-slate-400 max-w-lg mx-auto mb-6 text-sm" id="path-desc-result">Analyzing flowchart parameters...</p>
+                    <a href="#path1" id="path-btn-result" class="inline-block px-8 py-3.5 bg-gradient-to-r from-cyanAccent to-emeraldAccent text-dark font-bold rounded-xl shadow-lg transition duration-200">
+                        View My Track Roadmap
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PATH ONE: BECOMING AN AI USER -->
+    <section id="path1" class="py-24 border-b border-slate-800 bg-slate-950/40 relative">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                
+                <div class="lg:col-span-5 lg:sticky lg:top-24">
+                    <span class="text-xs font-mono uppercase tracking-widest text-cyanAccent block mb-3">Path 01</span>
+                    <h2 class="text-4xl font-extrabold text-white mb-6">The Proactive AI User</h2>
+                    <p class="text-slate-300 leading-relaxed text-sm mb-6">
+                        Using AI professionally is a specialized leverage skillset. High-performance "AI Users" don't just prompt casually: they build visual pipeline automations and connect LLM layers into standard work processes.
+                    </p>
+                    
+                    <!-- n8n / Zapier Workflow Pipeline Simulation Diagram -->
+                    <div class="p-6 bg-slate-900/80 border border-slate-800 rounded-2xl mb-8">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="text-xs font-mono uppercase tracking-wider text-emeraldAccent"><i class="fa-solid fa-diagram-next mr-1"></i> Automation Engine Workflow</h4>
+                            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emeraldAccent animate-ping"></span>
+                        </div>
+                        
+                        <!-- Interactive SVG Workspace Workflow -->
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-900 flex justify-between items-center relative overflow-hidden h-24">
+                            <!-- Left Node (Trigger) -->
+                            <div class="flex flex-col items-center z-10">
+                                <div class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 text-cyanAccent flex items-center justify-center text-xs shadow"><i class="fa-solid fa-envelope"></i></div>
+                                <span class="text-[10px] font-mono text-slate-500 mt-1">Gmail Trigger</span>
+                            </div>
+                            
+                            <!-- Arrow Stream -->
+                            <div class="flex-1 h-[2px] bg-slate-800 mx-2 relative overflow-hidden">
+                                <div class="absolute h-full w-4 bg-gradient-to-r from-transparent via-cyanAccent to-transparent animate-slide" style="animation: slide 1.5s infinite linear;"></div>
+                            </div>
+
+                            <!-- Mid Node (Agent Process) -->
+                            <div class="flex flex-col items-center z-10">
+                                <div class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 text-purpleAccent flex items-center justify-center text-xs shadow"><i class="fa-solid fa-robot"></i></div>
+                                <span class="text-[10px] font-mono text-slate-500 mt-1">AI Processor</span>
+                            </div>
+
+                            <!-- Arrow Stream -->
+                            <div class="flex-1 h-[2px] bg-slate-800 mx-2 relative overflow-hidden">
+                                <div class="absolute h-full w-4 bg-gradient-to-r from-transparent via-purpleAccent to-transparent animate-slide" style="animation: slide 1.5s infinite linear; animation-delay: 0.7s;"></div>
+                            </div>
+
+                            <!-- Right Node (Action) -->
+                            <div class="flex flex-col items-center z-10">
+                                <div class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 text-emeraldAccent flex items-center justify-center text-xs shadow"><i class="fa-solid fa-paper-plane"></i></div>
+                                <span class="text-[10px] font-mono text-slate-500 mt-1">Slack Alert</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Prompt Sandbox -->
+                <div class="lg:col-span-7 space-y-8">
+                    <div class="bg-card-bg border border-card-border p-8 rounded-3xl relative glass-card neon-glow-cyan">
+                        <h3 class="text-2xl font-bold text-white mb-4">Prompt Engineering Sandbox</h3>
+                        <p class="text-sm text-slate-400 mb-6">Toggle the prompt construction layout below to inspect how model outputs change when you move from simple chat inputs to structured markdown context constraints:</p>
+                        
+                        <div class="flex bg-slate-950 rounded-lg p-1 mb-6">
+                            <button onclick="togglePromptComparison('bad')" id="btn-prompt-bad" class="flex-1 py-2 text-xs font-semibold rounded-md transition duration-150 bg-slate-900 text-roseAccent">
+                                Simple Prompt
+                            </button>
+                            <button onclick="togglePromptComparison('good')" id="btn-prompt-good" class="flex-1 py-2 text-xs font-semibold rounded-md transition duration-150 text-slate-400">
+                                Structured Context
+                            </button>
+                        </div>
+
+                        <!-- BAD PROMPT INPUT CONTAINER -->
+                        <div id="prompt-box-bad" class="p-5 rounded-2xl bg-slate-900/80 border border-roseAccent/20 text-slate-300 text-xs font-mono mb-4 leading-relaxed">
+                            "Explain machine learning to a beginner."
+                        </div>
+
+                        <!-- GOOD PROMPT INPUT CONTAINER -->
+                        <div id="prompt-box-good" class="hidden p-5 rounded-2xl bg-slate-900/80 border border-emeraldAccent/20 text-slate-300 text-xs font-mono mb-4 leading-relaxed">
+                            <span class="text-emeraldAccent">// Persona / Role</span><br>
+                            You are a senior computer science professor specializing in explaining complex systems with simple analogies.<br><br>
+                            <span class="text-emeraldAccent">// Target Audience</span><br>
+                            Deconstruct "Machine Learning" for a high school freshman using analogies from modern video game mechanics.<br><br>
+                            <span class="text-emeraldAccent">// Structural Constraints</span><br>
+                            Format the output with 3 bullet points, zero technical equations, and a concluding gamified quiz question.
+                        </div>
+                        
+                        <p class="text-[11px] font-mono text-slate-500" id="prompt-comment">
+                            <i class="fa-solid fa-circle-exclamation text-roseAccent mr-1"></i> Simple inputs yield general, broad responses lacking tactical context or custom guidelines.
+                        </p>
+                    </div>
+
+                    <!-- Category Drawers for User Tools -->
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-bold text-white">Essential Leverage Toolset</h3>
+                        
+                        <div class="bg-card-bg border border-card-border rounded-2xl overflow-hidden glass-card">
+                            <button onclick="toggleToolAccordion('acc-user-1')" class="w-full flex justify-between items-center p-5 text-left focus:outline-none">
+                                <span class="font-bold text-slate-200 text-sm">Advanced Text &amp; Reasoning</span>
+                                <i class="fa-solid fa-chevron-down text-slate-500 text-xs"></i>
+                            </button>
+                            <div id="acc-user-1" class="hidden px-5 pb-5 text-xs text-slate-400 space-y-3 border-t border-slate-900/80 pt-4">
+                                <p><strong class="text-white">Claude (Anthropic):</strong> The gold standard for deep logical reasoning, complex programming adjustments, and context management.</p>
+                                <p><strong class="text-white">Gemini (Google):</strong> Multi-modal power tools capable of reading immense code structures and files instantly.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-card-bg border border-card-border rounded-2xl overflow-hidden glass-card">
+                            <button onclick="toggleToolAccordion('acc-user-2')" class="w-full flex justify-between items-center p-5 text-left focus:outline-none">
+                                <span class="font-bold text-slate-200 text-sm">Design &amp; Synthesis Tools</span>
+                                <i class="fa-solid fa-chevron-down text-slate-500 text-xs"></i>
+                            </button>
+                            <div id="acc-user-2" class="hidden px-5 pb-5 text-xs text-slate-400 space-y-3 border-t border-slate-900/80 pt-4">
+                                <p><strong class="text-white">Midjourney / DALL-E:</strong> State-of-the-art vector and conceptual image design tools.</p>
+                                <p><strong class="text-white">ElevenLabs / Suno:</strong> Deep synthetic voice modeling and instrumental audio orchestration platforms.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PATH TWO: BECOMING AN AI APPLICATION DEVELOPER -->
+    <section id="path2" class="py-24 border-b border-slate-800 bg-dark relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                
+                <div class="lg:col-span-5 lg:sticky lg:top-24">
+                    <span class="text-xs font-mono uppercase tracking-widest text-emeraldAccent block mb-3">Path 02</span>
+                    <h2 class="text-4xl font-extrabold text-white mb-6">The AI App Developer</h2>
+                    <p class="text-slate-300 leading-relaxed text-sm mb-6">
+                        This is the ideal track for modern computer science students. AI developers build core application layers, coordinate API model inference endpoints, structure semantic vector stores, and establish agent memory contexts.
+                    </p>
+
+                    <!-- DIAGRAM: THE AI APPLICATION TOPOLOGY -->
+                    <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
+                        <span class="text-[10px] font-mono text-cyanAccent uppercase font-bold tracking-widest block mb-4">Application Topology Flowchart</span>
+                        
+                        <div class="space-y-4 relative">
+                            <!-- Node: Frontend User -->
+                            <div class="flex items-center gap-3 p-3 bg-slate-950/80 rounded-xl border border-slate-800">
+                                <div class="w-8 h-8 rounded-lg bg-cyanAccent/10 text-cyanAccent flex items-center justify-center text-sm"><i class="fa-solid fa-display"></i></div>
+                                <div class="text-left">
+                                    <h5 class="text-xs font-bold text-white">1. Client Front-End</h5>
+                                    <span class="text-[9px] font-mono text-slate-500">React web view capturing queries</span>
+                                </div>
+                            </div>
+                            <!-- Vector connector -->
+                            <div class="w-1.5 h-4 bg-slate-800 mx-auto rounded"></div>
+                            <!-- Node: Server router -->
+                            <div class="flex items-center gap-3 p-3 bg-slate-950/80 rounded-xl border border-slate-800">
+                                <div class="w-8 h-8 rounded-lg bg-purpleAccent/10 text-purpleAccent flex items-center justify-center text-sm"><i class="fa-solid fa-server"></i></div>
+                                <div class="text-left">
+                                    <h5 class="text-xs font-bold text-white">2. Backend Web Server</h5>
+                                    <span class="text-[9px] font-mono text-slate-500">FastAPI processing security parameters</span>
+                                </div>
+                            </div>
+                            <!-- Vector connector -->
+                            <div class="w-1.5 h-4 bg-slate-800 mx-auto rounded"></div>
+                            <!-- Node: AI Vector Injection -->
+                            <div class="flex items-center gap-3 p-3 bg-slate-950/80 rounded-xl border border-slate-800">
+                                <div class="w-8 h-8 rounded-lg bg-emeraldAccent/10 text-emeraldAccent flex items-center justify-center text-sm"><i class="fa-solid fa-database"></i></div>
+                                <div class="text-left">
+                                    <h5 class="text-xs font-bold text-white">3. Vector Memory Store</h5>
+                                    <span class="text-[9px] font-mono text-slate-500">Pinecone injecting semantic data search</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive API Request Simulator Container -->
+                <div class="lg:col-span-7 bg-card-bg border border-card-border rounded-3xl p-8 shadow-2xl relative glass-card neon-glow-emerald">
+                    <h3 class="text-2xl font-bold text-white mb-2">LLM API Request Simulator</h3>
+                    <p class="text-slate-400 text-sm mb-6">Configure the slider and selectors below to watch how developer options compile into a real structured JSON payload ready for model endpoints:</p>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div>
+                            <label class="block text-xs font-mono uppercase text-slate-400 mb-2">System Instructions Prompt</label>
+                            <input id="api-sys" type="text" value="You are a helpful coding assistant." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 text-xs font-mono focus:outline-none focus:border-emeraldAccent">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-mono uppercase text-slate-400 mb-2">User Input Prompt</label>
+                            <textarea id="api-usr" rows="2" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 text-xs font-mono focus:outline-none focus:border-emeraldAccent">Deconstruct what a REST API is in 10 words.</textarea>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-mono uppercase text-slate-400 mb-2">Temperature: <span id="temp-val" class="text-emeraldAccent font-bold">0.7</span></label>
+                                <input id="api-temp" type="range" min="0.0" max="1.5" step="0.1" value="0.7" oninput="updateApiSimulator()" class="w-full accent-emeraldAccent cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono uppercase text-slate-400 mb-2">Target Model</label>
+                                <select id="api-model" onchange="updateApiSimulator()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-slate-200 text-xs focus:outline-none">
+                                    <option value="gpt-4o">gpt-4o-mini</option>
+                                    <option value="claude-3-5-sonnet">claude-3-5-sonnet</option>
+                                    <option value="deepseek-coder">deepseek-coder-r1</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Computed Payload Code-Window -->
+                    <div class="bg-slate-950 p-6 rounded-2xl border border-slate-900 relative">
+                        <span class="absolute top-3 right-4 text-[10px] font-mono uppercase text-slate-600">Generated JSON HTTP Payload</span>
+                        <pre id="api-json-payload" class="text-slate-300 font-mono text-[11px] overflow-x-auto whitespace-pre-wrap leading-relaxed"></pre>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PATH THREE: MACHINE LEARNING ENGINEER -->
+    <section id="path3" class="py-24 border-b border-slate-800 bg-slate-950/40 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                
+                <div class="lg:col-span-5 lg:sticky lg:top-24">
+                    <span class="text-xs font-mono uppercase tracking-widest text-purpleAccent block mb-3">Path 03</span>
+                    <h2 class="text-4xl font-extrabold text-white mb-6">The ML Engineer</h2>
+                    <p class="text-slate-300 leading-relaxed text-sm mb-6">
+                        This is the deep statistical, mathematical track. Core ML Engineers design original network layers, configure loss optimizations, evaluate data-scrapes, and optimize high-throughput model backpropagation runs.
+                    </p>
+
+                    <!-- Technical Cards -->
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-card-bg/50 border border-card-border">
+                            <div class="p-2.5 bg-purpleAccent/10 border border-purpleAccent/20 text-purpleAccent rounded-lg text-lg"><i class="fa-solid fa-calculator"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-xs">Mathematical Foundations</h4>
+                                <p class="text-[11px] text-slate-400 mt-1">Direct application of multivariable calculus chain-rule configurations and high-dimension matrix multiplication loops.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-card-bg/50 border border-card-border">
+                            <div class="p-2.5 bg-purpleAccent/10 border border-purpleAccent/20 text-purpleAccent rounded-lg text-lg"><i class="fa-solid fa-layer-group"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-xs">Multi-Layer Architecture</h4>
+                                <p class="text-[11px] text-slate-400 mt-1">Configuring neural network weights across convolutional filters, feed-forward arrays, and Attention layers.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Backprop / Gradient Descent Optimizer Widget -->
+                <div class="lg:col-span-7 bg-card-bg border border-card-border rounded-3xl p-8 shadow-2xl relative glass-card neon-glow-purple">
+                    <h3 class="text-2xl font-bold text-white mb-2">Backpropagation Simulator</h3>
+                    <p class="text-slate-400 text-sm mb-6">Click the iteration key below to simulate gradient descent adjustment weights. Watch the loss index sink as vectors fire visual impulses:</p>
+                    
+                    <div class="grid grid-cols-3 gap-4 mb-6 bg-slate-950 p-4 rounded-xl border border-slate-900 text-center">
+                        <div>
+                            <span class="block text-[10px] font-mono uppercase text-slate-500 mb-1">Learning Rate</span>
+                            <select id="ml-lr" onchange="resetMlSim()" class="bg-slate-900 border border-slate-800 text-slate-300 text-xs px-2.5 py-1 rounded focus:outline-none">
+                                <option value="0.01">0.01 (Stable)</option>
+                                <option value="0.1">0.1 (Aggressive)</option>
+                                <option value="0.5">0.5 (Unstable)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] font-mono uppercase text-slate-500 mb-1">Epoch Run</span>
+                            <span id="ml-epoch-val" class="block text-sm font-mono font-bold text-white">0</span>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] font-mono uppercase text-slate-500 mb-1">Model Loss</span>
+                            <span id="ml-loss-val" class="block text-sm font-mono font-bold text-cyanAccent">0.824</span>
+                        </div>
+                    </div>
+
+                    <!-- Neural Network Connection Line Visual Diagram -->
+                    <div class="relative h-44 bg-slate-950 rounded-2xl border border-slate-900 flex justify-around items-center px-4 overflow-hidden mb-6">
+                        <!-- Input Layer Node -->
+                        <div class="flex flex-col items-center">
+                            <div class="w-10 h-10 rounded-full bg-purpleAccent/20 border border-purpleAccent text-purpleAccent flex items-center justify-center font-mono text-xs font-bold shadow-lg shadow-purpleAccent/5">X</div>
+                            <span class="text-[9px] font-mono text-slate-500 mt-2">Input Layer</span>
+                        </div>
+                        
+                        <!-- Connecting gradient vector line -->
+                        <div class="h-[2px] bg-gradient-to-r from-purpleAccent to-cyanAccent flex-1 mx-4 max-w-[120px] relative">
+                            <span id="ml-weight-label" class="absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] font-mono text-slate-400">w: 0.542</span>
+                            <div id="ml-pulse" class="absolute h-2.5 w-2.5 rounded-full bg-cyanAccent -top-0.5 animate-ping"></div>
+                        </div>
+
+                        <!-- Activation Neurons Layer -->
+                        <div class="flex flex-col items-center">
+                            <div class="w-10 h-10 rounded-full bg-cyanAccent/20 border border-cyanAccent text-cyanAccent flex items-center justify-center font-mono text-xs font-bold shadow-lg shadow-cyanAccent/5">σ</div>
+                            <span class="text-[9px] font-mono text-slate-500 mt-2">Activation (ReLU)</span>
+                        </div>
+
+                        <div class="h-[2px] bg-gradient-to-r from-cyanAccent to-emeraldAccent flex-1 mx-4 max-w-[120px] relative">
+                            <span id="ml-bias-label" class="absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] font-mono text-slate-400">b: 0.120</span>
+                        </div>
+
+                        <!-- Output Layer Node -->
+                        <div class="flex flex-col items-center">
+                            <div class="w-10 h-10 rounded-full bg-emeraldAccent/20 border border-emeraldAccent text-emeraldAccent flex items-center justify-center font-mono text-xs font-bold shadow-lg shadow-emeraldAccent/5">Y</div>
+                            <span class="text-[9px] font-mono text-slate-500 mt-2">Output Layer</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button onclick="runTrainingEpoch()" class="flex-1 py-3 bg-purpleAccent hover:bg-purpleAccent/85 text-white font-bold rounded-xl transition duration-150 text-xs">
+                            Run Backpropagation Cycle
+                        </button>
+                        <button onclick="resetMlSim()" class="px-5 py-3 bg-slate-900 border border-slate-800 text-slate-400 hover:text-white rounded-xl transition duration-150 text-xs">
+                            Reset Weights
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CHAPTER 5: HOW CHATGPT WORKS (TOKENIZER PLAYGROUND) -->
+    <section id="chatgpt-works" class="py-24 border-b border-slate-800 bg-dark">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-mono uppercase tracking-widest text-cyanAccent block mb-3">Chapter 08</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Inside Large Language Models</h2>
+                <p class="text-slate-400">Computers don't process language like humans do. Click and type in our playground to inspect how text segments are sliced into color-coded numerical tags called <strong class="text-white">Tokens</strong>.</p>
+            </div>
+
+            <!-- DIAGRAM: THE TRANSFORMER MECHANICAL STACK -->
+            <div class="max-w-4xl mx-auto bg-card-bg border border-card-border rounded-3xl p-6 mb-16 glass-card">
+                <h3 class="text-lg font-bold text-slate-200 mb-6 text-center font-mono">The LLM Transformer Block Stack</h3>
+                <div class="space-y-3">
+                    <!-- Layer 4: Output -->
+                    <div class="p-4 bg-slate-950/80 rounded-xl border border-roseAccent/20 flex justify-between items-center group hover:border-roseAccent transition">
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 rounded-lg bg-roseAccent/10 text-roseAccent flex items-center justify-center text-xs font-bold">4</span>
+                            <div class="text-left">
+                                <h5 class="text-sm font-bold text-white">Softmax Probability Output Layer</h5>
+                                <p class="text-xs text-slate-500">Normalizes numerical matrix results into word prediction percentages</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-roseAccent opacity-0 group-hover:opacity-100 transition"></i>
+                    </div>
+                    <!-- Layer 3: Feed Forward -->
+                    <div class="p-4 bg-slate-950/80 rounded-xl border border-purpleAccent/20 flex justify-between items-center group hover:border-purpleAccent transition">
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 rounded-lg bg-purpleAccent/10 text-purpleAccent flex items-center justify-center text-xs font-bold">3</span>
+                            <div class="text-left">
+                                <h5 class="text-sm font-bold text-white">Feed-Forward Dense Network Layer</h5>
+                                <p class="text-xs text-slate-500">Processes token attributes through standard non-linear activation pipelines</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-purpleAccent opacity-0 group-hover:opacity-100 transition"></i>
+                    </div>
+                    <!-- Layer 2: Attention -->
+                    <div class="p-4 bg-slate-950/80 rounded-xl border border-cyanAccent/20 flex justify-between items-center group hover:border-cyanAccent transition">
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 rounded-lg bg-cyanAccent/10 text-cyanAccent flex items-center justify-center text-xs font-bold">2</span>
+                            <div class="text-left">
+                                <h5 class="text-sm font-bold text-white">Multi-Head Self-Attention Layer</h5>
+                                <p class="text-xs text-slate-500">Maps contextual links between all words across the query paragraph</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-cyanAccent opacity-0 group-hover:opacity-100 transition"></i>
+                    </div>
+                    <!-- Layer 1: Embeddings -->
+                    <div class="p-4 bg-slate-950/80 rounded-xl border border-emeraldAccent/20 flex justify-between items-center group hover:border-emeraldAccent transition">
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 rounded-lg bg-emeraldAccent/10 text-emeraldAccent flex items-center justify-center text-xs font-bold">1</span>
+                            <div class="text-left">
+                                <h5 class="text-sm font-bold text-white">Byte-Pair Token Vector Embeddings</h5>
+                                <p class="text-xs text-slate-500">Translates characters into multi-dimensional float arrays (Coordinates)</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-emeraldAccent opacity-0 group-hover:opacity-100 transition"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Tokenizer Playground -->
+            <div class="bg-card-bg border border-card-border rounded-3xl p-8 shadow-2xl relative max-w-4xl mx-auto glass-card neon-glow-cyan">
+                <h3 class="text-2xl font-bold text-white mb-4">Visual Tokenizer Playground</h3>
+                <p class="text-slate-400 text-xs mb-6">Enter custom lines of code or text inside the input panel below to see how deep prediction engines break strings into integer tokens:</p>
+                
+                <textarea id="tokenizer-input" rows="3" oninput="tokenizeText()" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 text-slate-200 text-xs font-mono focus:outline-none focus:border-cyanAccent mb-6">Machine learning networks calculate high dimensional vector spaces.</textarea>
+
+                <div class="space-y-4">
+                    <div>
+                        <span class="block text-[10px] font-mono uppercase text-slate-500 mb-2">Color-Coded Token Segments</span>
+                        <div id="tokenized-output-visual" class="p-5 rounded-2xl bg-slate-950 border border-slate-900 min-h-[60px] flex flex-wrap gap-1.5 text-xs font-mono"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <span class="block text-[10px] font-mono uppercase text-slate-500">Character count</span>
+                            <span id="char-count-val" class="text-lg font-mono font-bold text-white">0</span>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] font-mono uppercase text-slate-500">Computed tokens approximation</span>
+                            <span id="token-count-val" class="text-lg font-mono font-bold text-cyanAccent">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHAPTER 6: PORTFOLIO TIMELINE -->
+    <section id="projects-timeline" class="py-24 border-b border-slate-800 bg-slate-950/40">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-mono uppercase tracking-widest text-emeraldAccent block mb-3">Chapter 09</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Project Portfolio Timeline</h2>
+                <p class="text-slate-400">Master intermediate concepts by building robust developer code. Avoid basic calculator templates and align codebases to this modular roadmap:</p>
+            </div>
+
+            <!-- DIAGRAM: SUBWAY-LINE PORTFOLIO MAP -->
+            <div class="max-w-4xl mx-auto bg-card-bg border border-card-border rounded-3xl p-8 mb-16 glass-card relative overflow-hidden">
+                <h3 class="text-lg font-bold text-slate-200 mb-8 text-center font-mono">The Portfolio Subway Route</h3>
+                <div class="relative pl-12 border-l-2 border-dashed border-slate-800 space-y-12">
+                    
+                    <!-- Milestone 1 -->
+                    <div class="relative">
+                        <!-- Glowing station circle icon -->
+                        <span class="absolute -left-[57px] top-0.5 w-6 h-6 rounded-full bg-cyanAccent border-4 border-slate-950 shadow-lg shadow-cyanAccent/50 z-10 flex items-center justify-center text-[10px] text-slate-950 font-bold">1</span>
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                            <div class="md:col-span-8">
+                                <h4 class="text-md font-bold text-white mb-1">Beginner Terminus: Semantic Document Search</h4>
+                                <p class="text-xs text-slate-400">Learn to build indexing parameters, capture text, and query embeddings inside ChromaDB vector layers.</p>
+                            </div>
+                            <div class="md:col-span-4 bg-slate-950/90 p-4 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
+                                <div class="text-left">
+                                    <span class="text-[9px] font-mono text-cyanAccent block">Active Stack</span>
+                                    <span class="font-bold text-white">ChromaDB / Python</span>
+                                </div>
+                                <i class="fa-solid fa-code text-cyanAccent text-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Milestone 2 -->
+                    <div class="relative">
+                        <span class="absolute -left-[57px] top-0.5 w-6 h-6 rounded-full bg-purpleAccent border-4 border-slate-950 shadow-lg shadow-purpleAccent/50 z-10 flex items-center justify-center text-[10px] text-slate-950 font-bold">2</span>
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                            <div class="md:col-span-8">
+                                <h4 class="text-md font-bold text-white mb-1">Intermediate Transfer: Custom Resume Analyzer</h4>
+                                <p class="text-xs text-slate-400">Assemble multi-modal application networks. Implement file-upload listeners, context window controls, and markdown response modules.</p>
+                            </div>
+                            <div class="md:col-span-4 bg-slate-950/90 p-4 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
+                                <div class="text-left">
+                                    <span class="text-[9px] font-mono text-purpleAccent block">Active Stack</span>
+                                    <span class="font-bold text-white">React / FastAPI</span>
+                                </div>
+                                <i class="fa-solid fa-file-invoice text-purpleAccent text-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Milestone 3 -->
+                    <div class="relative">
+                        <span class="absolute -left-[57px] top-0.5 w-6 h-6 rounded-full bg-emeraldAccent border-4 border-slate-950 shadow-lg shadow-emeraldAccent/50 z-10 flex items-center justify-center text-[10px] text-slate-950 font-bold">3</span>
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                            <div class="md:col-span-8">
+                                <h4 class="text-md font-bold text-white mb-1">Advanced Terminal: LangGraph Autonomous Researcher</h4>
+                                <p class="text-xs text-slate-400">Establish fully autonomous agent networks. Configure loops, fallback tool queries, and memory caching structures.</p>
+                            </div>
+                            <div class="md:col-span-4 bg-slate-950/90 p-4 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
+                                <div class="text-left">
+                                    <span class="text-[9px] font-mono text-emeraldAccent block">Active Stack</span>
+                                    <span class="font-bold text-white">LangGraph / Docker</span>
+                                </div>
+                                <i class="fa-solid fa-robot text-emeraldAccent text-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHAPTER 7: RESOURCES & CAREER GRID -->
+    <section id="resources-careers" class="py-24 border-b border-slate-800 bg-dark">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                
+                <!-- Left Hand Column - Career Opportunities -->
+                <div>
+                    <span class="text-xs font-mono uppercase tracking-widest text-cyanAccent block mb-3">Chapter 10</span>
+                    <h2 class="text-3xl font-extrabold text-white mb-6">Modern AI Careers</h2>
+                    <p class="text-slate-400 text-xs mb-8 leading-relaxed">Match personal development goals to live industry trajectories. Note on Prompt Engineering: While highly valuable as an essential developer skill, treat it as a robust auxiliary skill rather than a static, multi-decade solo career track.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="p-5 bg-card-bg border border-card-border rounded-2xl hover:border-slate-700 transition glass-card">
+                            <h4 class="font-bold text-white text-sm mb-1">AI / ML Engineer</h4>
+                            <p class="text-[10px] text-slate-500 font-mono mb-2">PyTorch, Python, Tensor Board, GPU clusters</p>
+                            <p class="text-slate-300 text-xs leading-relaxed">Manages hyper-scale model deployments, runs parameter fine-tunes, constructs vector retrieval indices, and monitors node latencies.</p>
+                        </div>
+                        <div class="p-5 bg-card-bg border border-card-border rounded-2xl hover:border-slate-700 transition glass-card">
+                            <h4 class="font-bold text-white text-sm mb-1">AI Full-Stack Developer</h4>
+                            <p class="text-[10px] text-slate-500 font-mono mb-2">FastAPI, OpenAI API, Langchain, Postgres</p>
+                            <p class="text-slate-300 text-xs leading-relaxed">Engineers interface structures, orchestrates LLM endpoints, secures authentication modules, and coordinates agent loops.</p>
+                        </div>
+                        <div class="p-5 bg-card-bg border border-card-border rounded-2xl hover:border-slate-700 transition glass-card">
+                            <h4 class="font-bold text-white text-sm mb-1">AI Product Manager</h4>
+                            <p class="text-[10px] text-slate-500 font-mono mb-2">Enterprise UX, SLA monitors, cost analysis</p>
+                            <p class="text-slate-300 text-xs leading-relaxed">Formulates model capabilities roadmap, calculates token cost structures, and aligns features to direct user needs.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Hand Column - Resources Accordion -->
+                <div>
+                    <h2 class="text-3xl font-extrabold text-white mb-6">Learning Resources</h2>
+                    <p class="text-slate-400 text-xs mb-8 leading-relaxed">Access high-quality developer platforms to expand structural knowledge pathways:</p>
+                    
+                    <div class="space-y-4">
+                        <div class="p-5 bg-card-bg border border-card-border rounded-2xl glass-card">
+                            <h4 class="font-bold text-white text-xs mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-code text-cyanAccent"></i> GitHub Roadmap Hubs
+                            </h4>
+                            <p class="text-[11px] text-slate-400 leading-relaxed mb-3">Explore open-source curriculum nodes representing live coding resources, algorithm setups, and textbook guides.</p>
+                            <span class="inline-block px-2 py-0.5 rounded bg-slate-900 text-slate-400 text-[9px] font-mono">Highly Recommended</span>
+                        </div>
+                        
+                        <div class="p-5 bg-card-bg border border-card-border rounded-2xl glass-card">
+                            <h4 class="font-bold text-white text-xs mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-graduation-cap text-purpleAccent"></i> Kaggle Notebooks
+                            </h4>
+                            <p class="text-[11px] text-slate-400 leading-relaxed mb-3">Compete in live dataset analysis arenas. Gain direct practical experience running models over active web indices.</p>
+                            <span class="inline-block px-2 py-0.5 rounded bg-slate-900 text-slate-400 text-[9px] font-mono">Core ML Engineering</span>
+                        </div>
+
+                        <div class="p-5 bg-card-bg border border-card-border rounded-2xl glass-card">
+                            <h4 class="font-bold text-white text-xs mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-envelope-open-text text-emeraldAccent"></i> Research Papers (arXiv)
+                            </h4>
+                            <p class="text-[11px] text-slate-400 leading-relaxed mb-3">Trace theoretical discoveries. Read fundamental texts including "Attention Is All You Need" to evaluate transformers.</p>
+                            <span class="inline-block px-2 py-0.5 rounded bg-slate-900 text-slate-400 text-[9px] font-mono">Advanced Academic</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL ACTION PLAN: INTERACTIVE ROADMAP STUDY TRACKER -->
+    <section id="action-plan" class="py-24 bg-gradient-to-t from-slate-950 via-dark to-dark overflow-hidden">
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            
+            <span class="text-xs font-mono uppercase tracking-widest text-emeraldAccent block mb-3">Action Plan</span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6">Your Interactive Study Tracker</h2>
+            <p class="text-slate-400 max-w-xl mx-auto text-sm mb-12">Tick the boxes below as you master these milestones. Watch your training progress percentage update dynamically in the scoreboard dashboard!</p>
+
+            <!-- Circular Progress Dashboard -->
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8 bg-card-bg border border-card-border rounded-3xl p-8 mb-12 shadow-2xl relative max-w-2xl mx-auto glass-card neon-glow-cyan">
+                <div class="relative w-32 h-32 flex items-center justify-center">
+                    <!-- SVG Progress Circle -->
+                    <svg class="w-full h-full transform -rotate-90">
+                        <circle cx="64" cy="64" r="54" stroke="#1e293b" stroke-width="8" fill="transparent" class="transition-all duration-300"></circle>
+                        <circle id="study-progress-circle" cx="64" cy="64" r="54" stroke="#06b6d4" stroke-width="8" fill="transparent" stroke-dasharray="339.292" stroke-dashoffset="339.292" class="transition-all duration-500 ease-out"></circle>
+                    </svg>
+                    <span id="study-percent-text" class="absolute text-2xl font-mono font-bold text-white">0%</span>
+                </div>
+                
+                <div class="text-left">
+                    <h4 class="font-bold text-white text-base mb-1">Your Training Target Score</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-4">Complete fundamental elements systematically to maximize performance.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <span class="block text-[9px] font-mono uppercase text-slate-500">Estimated hours</span>
+                            <span id="study-hours-text" class="text-lg font-mono font-bold text-cyanAccent">0 / 220</span>
+                        </div>
+                        <div>
+                            <span class="block text-[9px] font-mono uppercase text-slate-500">Status</span>
+                            <span id="study-status-text" class="text-[10px] font-mono font-bold uppercase text-slate-500 mt-1 inline-block px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Uninitialized</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Checkbox target selector list -->
+            <div class="max-w-xl mx-auto space-y-3 text-left mb-16">
+                
+                <label class="flex items-start gap-4 p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition cursor-pointer select-none">
+                    <input type="checkbox" value="20" onchange="calcStudyProgress()" class="mt-1 w-5 h-5 accent-cyanAccent cursor-pointer rounded border-slate-800">
+                    <div>
+                        <h5 class="text-xs font-bold text-white">Milestone 01: Python Foundations</h5>
+                        <p class="text-[10px] text-slate-400 mt-0.5">Learn variables, functions, conditional arrays, and modules. (Est: 20 Hours)</p>
+                    </div>
+                </label>
+
+                <label class="flex items-start gap-4 p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition cursor-pointer select-none">
+                    <input type="checkbox" value="30" onchange="calcStudyProgress()" class="mt-1 w-5 h-5 accent-cyanAccent cursor-pointer rounded border-slate-800">
+                    <div>
+                        <h5 class="text-xs font-bold text-white">Milestone 02: REST APIs &amp; Data Payloads</h5>
+                        <p class="text-[10px] text-slate-400 mt-0.5">Query models directly, parse output strings, and build structured endpoints. (Est: 30 Hours)</p>
+                    </div>
+                </label>
+
+                <label class="flex items-start gap-4 p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition cursor-pointer select-none">
+                    <input type="checkbox" value="40" onchange="calcStudyProgress()" class="mt-1 w-5 h-5 accent-cyanAccent cursor-pointer rounded border-slate-800">
+                    <div>
+                        <h5 class="text-xs font-bold text-white">Milestone 03: Semantic Vector Datastores</h5>
+                        <p class="text-[10px] text-slate-400 mt-0.5">Learn embedding strategies and index documents inside Pinecone or pgvector. (Est: 40 Hours)</p>
+                    </div>
+                </label>
+
+                <label class="flex items-start gap-4 p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition cursor-pointer select-none">
+                    <input type="checkbox" value="50" onchange="calcStudyProgress()" class="mt-1 w-5 h-5 accent-cyanAccent cursor-pointer rounded border-slate-800">
+                    <div>
+                        <h5 class="text-xs font-bold text-white">Milestone 04: Agentic Framework Nodes</h5>
+                        <p class="text-[10px] text-slate-400 mt-0.5">Build agent feedback logic, node structures, and tools inside LangGraph. (Est: 50 Hours)</p>
+                    </div>
+                </label>
+
+                <label class="flex items-start gap-4 p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition cursor-pointer select-none">
+                    <input type="checkbox" value="80" onchange="calcStudyProgress()" class="mt-1 w-5 h-5 accent-cyanAccent cursor-pointer rounded border-slate-800">
+                    <div>
+                        <h5 class="text-xs font-bold text-white">Milestone 05: Core ML Math &amp; Deep Learning</h5>
+                        <p class="text-[10px] text-slate-400 mt-0.5">Master multivariable calculus gradient steps and matrix operations. (Est: 80 Hours)</p>
+                    </div>
+                </label>
+
+            </div>
+
+            <div class="text-center">
+                <p class="text-xs font-mono text-slate-500 mb-2">No dynamic licensing barriers. Open educational roadmap.</p>
+                <p class="text-lg text-slate-200 font-bold">The roadmap is set. Deploy your first local script today.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-12 border-t border-slate-900 bg-slate-950 text-center text-xs text-slate-600 font-mono">
+        <div class="max-w-6xl mx-auto px-6 space-y-3">
+            <p>© 2026 The AI Roadmap Project. Built dynamically to empower software students globally.</p>
+            <div class="flex justify-center gap-6 text-[10px]">
+                <a href="#hero" class="hover:text-cyanAccent transition">Back To Top</a>
+                <a href="#chapter4" class="hover:text-cyanAccent transition">Choose Path</a>
+                <a href="#chatgpt-works" class="hover:text-cyanAccent transition">Tokenizer Play</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- WINDOW LOAD & GLOBAL INIT ---
+        window.onload = function() {
+            initNeuralCanvas();
+            initTypingSub();
+            updateApiSimulator();
+            tokenizeText();
+            calcStudyProgress();
+        }
+
+        // --- HERO CANVAS INTERACTIVE ANIMATION ---
+        let canvas, ctx, particles;
+        const maxParticles = 95;
+
+        function initNeuralCanvas() {
+            canvas = document.getElementById('neuralCanvas');
+            ctx = canvas.getContext('2d');
+            resizeCanvas();
+            
+            particles = [];
+            for (let i = 0; i < maxParticles; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.7,
+                    vy: (Math.random() - 0.5) * 0.7,
+                    radius: Math.random() * 2 + 1.5
+                });
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            requestAnimationFrame(animateCanvas);
+        }
+
+        function resizeCanvas() {
+            if (canvas) {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(6, 182, 212, 0.45)';
+                ctx.fill();
+
+                // Draw logical connections between close nodes
+                for (let j = i + 1; j < particles.length; j++) {
+                    let p2 = particles[j];
+                    let dist = Math.hypot(p2.x - p.x, p2.y - p.y);
+                    if (dist < 110) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(6, 182, 212, ${0.15 * (1 - dist / 110)})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animateCanvas);
+        }
+
+        // --- TYPING SUBTITLE INTERACTION ---
+        const typingSentences = [
+            "From Complete Beginner to Building Real AI Applications",
+            "Master the exact tools, architectures, and math steps.",
+            "Choose your path, structure your portfolio, scale your code."
+        ];
+        let sentenceIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function initTypingSub() {
+            const el = document.getElementById('typing-sub');
+            if (!el) return;
+            
+            let current = typingSentences[sentenceIndex];
+            if (isDeleting) {
+                el.innerText = current.substring(0, charIndex--);
+            } else {
+                el.innerText = current.substring(0, charIndex++);
+            }
+
+            let speed = isDeleting ? 30 : 60;
+            if (!isDeleting && charIndex === current.length + 1) {
+                isDeleting = true;
+                speed = 2200; // Pause at end of sentence
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                sentenceIndex = (sentenceIndex + 1) % typingSentences.length;
+                speed = 500; // Pause before typing next
+            }
+
+            setTimeout(initTypingSub, speed);
+        }
+
+        // --- SCROLL BAR PROGRESS UPDATER ---
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            const bar = document.getElementById('progress-bar');
+            if (bar) bar.style.width = scrolled + '%';
+        });
+
+        // --- CHAPTER 1: HERO QUIZ RESPONSE CHECK ---
+        function checkHeroQuiz(button, isCorrect) {
+            const responseBox = document.getElementById('hero-quiz-response');
+            responseBox.classList.remove('hidden');
+            
+            const buttons = button.parentElement.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.className = "w-full text-left p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-sm flex justify-between items-center group transition";
+                btn.querySelector('i').className = "fa-regular fa-circle text-slate-600";
+            });
+
+            if (isCorrect) {
+                button.className = "w-full text-left p-3.5 rounded-xl bg-emeraldAccent/10 border border-emeraldAccent text-emeraldAccent text-sm flex justify-between items-center group transition";
+                button.querySelector('i').className = "fa-solid fa-circle-check text-emeraldAccent";
+                responseBox.className = "mt-4 text-xs font-mono text-emeraldAccent";
+                responseBox.innerHTML = "🎯 Correct! Large Language Models run next-token probability steps across hyper-scale neural matrices—no sentient consciousness involved.";
+            } else {
+                button.className = "w-full text-left p-3.5 rounded-xl bg-roseAccent/10 border border-roseAccent text-roseAccent text-sm flex justify-between items-center group transition";
+                button.querySelector('i').className = "fa-solid fa-circle-xmark text-roseAccent";
+                responseBox.className = "mt-4 text-xs font-mono text-roseAccent";
+                responseBox.innerHTML = "❌ Try again. Modern AI works on math configurations and empirical database patterns.";
+            }
+        }
+
+        // --- CHAPTER 1: AI IS NOT MAGIC EQUATION SANDBOX ---
+        let activeEqComponents = { data: false, alg: false, comp: false };
+
+        function toggleEqComponent(comp) {
+            activeEqComponents[comp] = !activeEqComponents[comp];
+            const btn = document.getElementById(`eq-${comp}`);
+            const result = document.getElementById('eq-result');
+            const cogL = document.getElementById('cog-left');
+            const cogR = document.getElementById('cog-right');
+
+            // Toggle visual button styles
+            if (activeEqComponents[comp]) {
+                if (comp === 'data') btn.className = "px-3 py-2 bg-cyanAccent/10 border border-cyanAccent/50 text-cyanAccent rounded-lg transition-all duration-300";
+                if (comp === 'alg') btn.className = "px-3 py-2 bg-purpleAccent/10 border border-purpleAccent/50 text-purpleAccent rounded-lg transition-all duration-300";
+                if (comp === 'comp') btn.className = "px-3 py-2 bg-emeraldAccent/10 border border-emeraldAccent/50 text-emeraldAccent rounded-lg transition-all duration-300";
+            } else {
+                btn.className = "px-3 py-2 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg transition-all duration-300";
+            }
+
+            // Check if equation is complete
+            if (activeEqComponents.data && activeEqComponents.alg && activeEqComponents.comp) {
+                result.className = "px-4 py-2 bg-gradient-to-r from-cyanAccent via-purpleAccent to-emeraldAccent text-slate-950 border border-transparent font-extrabold rounded-lg shadow-lg shadow-cyanAccent/10 transition-all duration-300";
+                cogL.style.animation = "spin 2s infinite linear";
+                cogR.style.animation = "spin 1.5s infinite linear reverse";
+            } else {
+                result.className = "px-4 py-2 bg-slate-900 text-slate-600 border border-slate-800 font-extrabold rounded-lg transition-all duration-300";
+                cogL.style.animation = "none";
+                cogR.style.animation = "none";
+            }
+        }
+
+        // --- CHAPTER 3: DYNAMIC INDUSTRY DRAWER METADATA (ELABORATED & SIMPLIFIED) ---
+        const industryMetadata = {
+            healthcare: {
+                title: "AI in Healthcare: Spotting Tumors Automatically",
+                image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80",
+                concept: "An expert eye that spots invisible signs of disease.",
+                examples: "Identifying cancer early from scans, predicting patient heart issues before they strike, finding new pharmaceutical components.",
+                stepByStep: [
+                    { num: "1", title: "Show Examples", desc: "The computer is fed 50,000 anonymous lung scans labeled 'Healthy' and 50,000 labeled 'Tumor'." },
+                    { num: "2", title: "Find the Tiny Differences", desc: "The computer compares millions of pixels to discover patterns that human eyes can miss—like tiny changes in shade, shape, or texture." },
+                    { num: "3", title: "Spot the Danger", desc: "When a new patient's scan is uploaded, the AI highlights suspicious regions instantly so tired doctors can examine them closer." }
+                ],
+                companies: "Google DeepMind (AlphaFold), Tempus AI, Roche Diagnostics, PathAI.",
+                opportunities: "Biomedical Data Analysts, Healthcare Systems Integrators, Clinical Safety Validators."
+            },
+            education: {
+                title: "AI in Education: Your Personal 24/7 Tutor",
+                image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80",
+                concept: "Learning that stretches or slows down based on your speed.",
+                examples: "Creating unique homework assignments for every single child, grading essays with clear personalized feedback, building customized flashcards.",
+                stepByStep: [
+                    { num: "1", title: "Track Habits", desc: "As a student solves homework, the AI monitors which questions they get right, where they hesitate, and how long they spend reading." },
+                    { num: "2", title: "Find Learning Gaps", desc: "Instead of saying 'failed test', the AI pinpoints the core issue: 'This student understands multiplying, but gets lost when dividing fractions'." },
+                    { num: "3", title: "Deliver Custom Lessons", desc: "The system dynamically changes tomorrow's homework to give the student easy-to-digest puzzles and helpful videos that specifically target division." }
+                ],
+                companies: "Duolingo Max, Khan Academy (Khanmigo), Century Tech, Quizlet.",
+                opportunities: "EdTech Curriculum Designers, AI Prompt Architects, Educational Product Managers."
+            },
+            finance: {
+                title: "AI in Finance: Catching Credit Card Thieves Instantly",
+                image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80",
+                concept: "A digital security guard checking billions of transactions every second.",
+                examples: "Blocking suspicious purchases, predicting whether a company's stock will slide, approving bank loans fairly.",
+                stepByStep: [
+                    { num: "1", title: "Learn Your Normal Habits", desc: "The bank's security AI studies your regular buying patterns: 'Usually buys gasoline on Tuesdays in Boston, spends $40 max, buys groceries at night'." },
+                    { num: "2", title: "Spot Strange Behaviors", desc: "A sudden charge of $1,500 occurs at 3 AM from a laptop shop in Munich, Germany, on your card." },
+                    { num: "3", title: "Lock the Card in Milliseconds", desc: "The AI compares the transaction to your normal routine and instantly denies the payment before the thief can walk away with the laptop." }
+                ],
+                companies: "Stripe Risk Radar, Renaissance Technologies, Bloomberg, PayPal Protection Engine.",
+                opportunities: "Quantitative Data Scientists, Cybersecurity Risk Analysts, Financial Compliance Officers."
+            },
+            gaming: {
+                title: "AI in Gaming: Smarter, Unpredictable Enemies",
+                image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80",
+                concept: "Opponents that observe your strategies and learn how to beat you.",
+                examples: "Enemies that change tactics when they see you jumping, generating beautiful game maps automatically, synthesizing lifelike voice-overs for characters.",
+                stepByStep: [
+                    { num: "1", title: "Analyze Your Strategies", desc: "The in-game villain tracks how you attack: 'This player always throws fireballs from the left side and jumps right'." },
+                    { num: "2", title: "Formulate a Counter-Move", desc: "The game engine calculates a counter-strategy: 'Raise shield on the left side, then slice right side'." },
+                    { num: "3", title: "Dynamic Surprise", desc: "The enemy shifts tactics mid-fight, making the boss encounter feel like playing against a real, thinking human friend." }
+                ],
+                companies: "Electronic Arts R&D, Ubisoft La Forge, Nvidia ACE, Unity.",
+                opportunities: "Gameplay AI Programmers, Procedural Level Designers, Game Balance Analysts."
+            },
+            agriculture: {
+                title: "AI in Agriculture: High-Tech Farming",
+                image: "https://images.unsplash.com/photo-1625246143121-5ea33e461b7e?auto=format&fit=crop&w=800&q=80",
+                concept: "Ensuring we grow the maximum amount of food with the minimum water and soil.",
+                examples: "Self-driving tractors navigating rows, drones scanning plants to see which are sick, targeted pesticide lasers.",
+                stepByStep: [
+                    { num: "1", title: "Map the Whole Field", desc: "Drones fly over thousands of crop acres, taking high-resolution infrared photographs of every single plant." },
+                    { num: "2", title: "Isolate Sick Plants", desc: "The Computer Vision software recognizes subtle leaf yellowing: 'Row 42, Crop 15 has signs of fungus infection'." },
+                    { num: "3", title: "Precision Treatment", desc: "Instead of spraying chemicals over the whole farm, a robotic sprayer applies a tiny drop of medicine directly onto the sick plant." }
+                ],
+                companies: "John Deere (Blue River Technology), Bowery Farming, Climate Corporation, Ceres Imaging.",
+                opportunities: "AgTech Software Developers, IoT Sensor Technicians, Drone Fleet Optimizers."
+            },
+            cybersecurity: {
+                title: "AI in Cybersecurity: Preventing Data Hackers",
+                image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80",
+                concept: "An automated immune system for company computer servers.",
+                examples: "Blocking viral network intrusions, detecting zero-day hacking loops, flagging compromised user profiles.",
+                stepByStep: [
+                    { num: "1", title: "Observe Network Traffic", desc: "The system monitors billions of web connections flowing in and out of a corporate database daily." },
+                    { num: "2", title: "Detect Strange Connections", desc: "It catches a computer downloading massive folders of confidential client files at an odd speed at 2:00 AM." },
+                    { num: "3", title: "Quarantine Immediately", desc: "Within seconds, the AI cuts off that user's access, alerts the system administrator, and safeguards the company's data." }
+                ],
+                companies: "CrowdStrike Falcon, Darktrace Sentinel, SentinelOne, Microsoft Copilot for Security.",
+                opportunities: "Threat Response Specialists, Secure Code Reviewers, Compliance Auditors."
+            },
+            robotics: {
+                title: "AI in Robotics: Steering Self-Driving Cars Safely",
+                image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80",
+                concept: "Giving metal hands and wheels the ability to navigate a chaotic world.",
+                examples: "Autopilot cars changing lanes, robotic arms packing boxes in Amazon warehouses, robotic search and rescue dogs.",
+                stepByStep: [
+                    { num: "1", title: "Build a 3D World Map", desc: "Lasers (LiDAR) and cameras continuously map the car's surroundings in 360 degrees, 50 times per second." },
+                    { num: "2", title: "Recognize All Obstacles", desc: "A computer vision model labels everything in real-time: 'Green box = human on bike, Red box = stop sign, Blue box = trash can'." },
+                    { num: "3", title: "Calculate Safe Paths", desc: "The car's decision engine evaluates different speed and steering choices, safely routing around the bicycle without slowing down." }
+                ],
+                companies: "Tesla Autopilot, Waymo, Boston Dynamics, Amazon Robotics, Skydio.",
+                opportunities: "Robotic Control Engineers, Computer Vision Developers, Sensor Calibration Experts."
+            },
+            marketing: {
+                title: "AI in Marketing & Retail: Finding Your Next Favorite Item",
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+                concept: "Knowing what products a customer needs before they search for them.",
+                examples: "Predicting who will cancel a subscription next month, generating custom visual ads for different buyers, dynamic price optimization.",
+                stepByStep: [
+                    { num: "1", title: "Track Buying Behaviors", desc: "The system registers that a customer bought a tent and a warm jacket on a travel store's website." },
+                    { num: "2", title: "Connect Similar Concepts", desc: "The AI looks at millions of historical user profiles: '87% of people who bought those items purchased a portable stove next'." },
+                    { num: "3", title: "Present the Offer", desc: "The shop sends a custom camping stove suggestion to your inbox with a friendly discount, exactly when you need it." }
+                ],
+                companies: "Amazon Recommendation Engine, Spotify, Salesforce Einstein, Adobe Target.",
+                opportunities: "Retail Optimization Analysts, Digital Growth Engineers, Ad Content Prompt Managers."
+            },
+            programming: {
+                title: "AI in Programming: Your Dynamic Writing Co-Pilot",
+                image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=800&q=80",
+                concept: "An expert coder looking over your shoulder to suggest solutions.",
+                examples: "Writing python scripts from plain English, finding difficult bugs instantly, translating old software code to modern languages.",
+                stepByStep: [
+                    { num: "1", title: "Read the Code Context", desc: "The coding assistant inspects the code files you currently have open on your computer screen." },
+                    { num: "2", title: "Find the Programming Loop", desc: "It matches your code logic to millions of open-source GitHub examples: 'He is trying to connect to a user database'." },
+                    { num: "3", title: "Write the Answer", desc: "The AI suggests the next 5 lines of code. You just press the 'Tab' key to insert them, saving hours of typing." }
+                ],
+                companies: "GitHub Copilot, Cursor Developer Space, Replit Agent, Cognition AI (Devin).",
+                opportunities: "Interface Integration Engineers, QA Benchmark Specialists, Code Workspace Managers."
+            },
+            law: {
+                title: "AI in Law: Scanning Thousands of Contracts Instantly",
+                image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80",
+                concept: "A digital lawyer capable of reading a 500-page lease in seconds.",
+                examples: "Finding risky loopholes in business deals, looking up old legal court cases, summarizing long court papers.",
+                stepByStep: [
+                    { num: "1", title: "Load the Document Stack", desc: "A company uploads a 100-page business contract containing legal terminology." },
+                    { num: "2", title: "Identify Hidden Loopholes", desc: "The legal AI model flags problematic sentences: 'This sentence says they can increase your fees without notice'." },
+                    { num: "3", title: "Deliver Clear Summary", desc: "The system writes a simple warning: 'Alert: Page 82 contains a fee change rule. Recommend changing this before signing'." }
+                ],
+                companies: "Harvey AI, Casetext CoCounsel, Luminance, Ironclad.",
+                opportunities: "Legal Tech Engineers, Compliance Risk Validators, Document Extraction Designers."
+            }
+        };
+
+        function openIndustryDrawer(key) {
+            const data = industryMetadata[key];
+            const drawer = document.getElementById('industry-drawer');
+            const content = document.getElementById('industry-content');
+            if (!data) return;
+
+            // Generate step-by-step visual workflow timeline
+            let stepHtml = "";
+            data.stepByStep.forEach(step => {
+                stepHtml += `
+                    <div class="relative pl-8 border-l border-cyanAccent/20">
+                        <span class="absolute -left-3 top-0 flex items-center justify-center w-6 h-6 rounded-full bg-cyanAccent text-dark text-xs font-mono font-bold">${step.num}</span>
+                        <h5 class="text-sm font-bold text-white mb-1">${step.title}</h5>
+                        <p class="text-xs text-slate-400 leading-relaxed">${step.desc}</p>
+                    </div>
+                `;
+            });
+
+            content.innerHTML = `
+                <div class="mb-6">
+                    <span class="text-[10px] font-mono text-cyanAccent uppercase tracking-widest bg-cyanAccent/10 px-2 py-0.5 rounded border border-cyanAccent/20">How AI Actually Works</span>
+                    <h3 class="text-2xl font-bold text-white mt-2 mb-1 flex items-center gap-3">
+                        ${data.title}
+                    </h3>
+                    <p class="text-xs text-emeraldAccent font-mono italic mb-4">"${data.concept}"</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <!-- Step by Step Animation Timeline -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="rounded-2xl overflow-hidden border border-slate-800 shadow-xl max-h-56">
+                            <img src="${data.image}" alt="${data.title}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="bg-slate-950 p-6 rounded-2xl border border-slate-900">
+                            <span class="block text-xs font-mono uppercase text-slate-500 mb-4"><i class="fa-solid fa-gears mr-1"></i> Data-Flow step by step</span>
+                            <div class="space-y-6">
+                                ${stepHtml}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Metadata block -->
+                    <div class="lg:col-span-6 space-y-4">
+                        <div class="bg-slate-950 p-5 rounded-xl border border-slate-900">
+                            <span class="block text-xs font-mono uppercase text-cyanAccent mb-2">Real Examples:</span>
+                            <p class="text-xs text-slate-300 leading-relaxed">${data.examples}</p>
+                        </div>
+                        <div class="bg-slate-950 p-5 rounded-xl border border-slate-900">
+                            <span class="block text-xs font-mono uppercase text-cyanAccent mb-2">Key Players to follow:</span>
+                            <p class="text-xs text-slate-300 leading-relaxed">${data.companies}</p>
+                        </div>
+                        <div class="bg-slate-950 p-5 rounded-xl border border-slate-900">
+                            <span class="block text-xs font-mono uppercase text-emeraldAccent mb-2">Strategic Career Opportunities:</span>
+                            <p class="text-xs text-slate-300 leading-relaxed">${data.opportunities}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            drawer.classList.remove('hidden');
+            drawer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function closeIndustryDrawer() {
+            document.getElementById('industry-drawer').classList.add('hidden');
+        }
+
+        // --- CHAPTER 4: FLOWCHART DIAGNOSTIC WIZARD ---
+        let pathfinderState = { step1: null };
+
+        function setPathfinderAns(step, val) {
+            const s1 = document.getElementById('pathfinder-step-1');
+            const s2 = document.getElementById('pathfinder-step-2');
+            const res = document.getElementById('pathfinder-result');
+            
+            // Visual flowchart path vectors
+            const v1 = document.getElementById('path-vector-1');
+            const v2 = document.getElementById('path-vector-2');
+            const v3 = document.getElementById('path-vector-3');
+            const root = document.getElementById('flow-node-root');
+            const nL = document.getElementById('flow-node-left');
+            const nM = document.getElementById('flow-node-mid');
+            const nR = document.getElementById('flow-node-right');
+
+            if (step === 1) {
+                pathfinderState.step1 = val;
+                root.setAttribute('fill', '#06b6d4');
+                
+                if (val === 'use') {
+                    v1.setAttribute('stroke', 'url(#glowGrad)');
+                    nL.setAttribute('fill', '#06b6d4');
+                    showPathfinderResult('use');
+                } else if (val === 'build') {
+                    s1.classList.add('hidden');
+                    s2.classList.remove('hidden');
+                } else if (val === 'math') {
+                    s1.classList.add('hidden');
+                    s2.classList.remove('hidden');
+                }
+            } else if (step === 2) {
+                if (pathfinderState.step1 === 'build' && val === 'low') {
+                    v2.setAttribute('stroke', 'url(#glowGrad)');
+                    nM.setAttribute('fill', '#8b5cf6');
+                    showPathfinderResult('build');
+                } else {
+                    v3.setAttribute('stroke', 'url(#glowGrad)');
+                    nR.setAttribute('fill', '#10b981');
+                    showPathfinderResult('ml');
+                }
+            }
+        }
+
+        function showPathfinderResult(profile) {
+            const s1 = document.getElementById('pathfinder-step-1');
+            const s2 = document.getElementById('pathfinder-step-2');
+            const res = document.getElementById('pathfinder-result');
+            const title = document.getElementById('path-title-result');
+            const desc = document.getElementById('path-desc-result');
+            const btn = document.getElementById('path-btn-result');
+
+            s1.classList.add('hidden');
+            s2.classList.add('hidden');
+            res.classList.remove('hidden');
+
+            if (profile === 'use') {
+                title.innerText = "Suggested Track: The Proactive AI User";
+                desc.innerText = "You focus on operational speed and workflow leverage. You want to orchestrate pre-trained prompt nodes and connect visual pipeline engines, avoiding backend configurations.";
+                btn.href = "#path1";
+            } else if (profile === 'build') {
+                title.innerText = "Suggested Track: The AI Application Developer";
+                desc.innerText = "You are perfect for software and CS integration. You will construct user-facing apps, parse REST API responses, clean semantic embedding files, and build relational logic layers.";
+                btn.href = "#path2";
+            } else {
+                title.innerText = "Suggested Track: The Machine Learning Engineer";
+                desc.innerText = "You are suited for core algorithm tracks. You will master calculus backpropagation routines, tune multi-layered deep networks, and clean mathematical loss dimensions.";
+                btn.href = "#path3";
+            }
+        }
+
+        // --- CHAPTER 5: ACCORDIONS & PROMPT COMPARE ---
+        function toggleToolAccordion(id) {
+            document.getElementById(id).classList.toggle('hidden');
+        }
+
+        function togglePromptComparison(mode) {
+            const bB = document.getElementById('prompt-box-bad');
+            const bG = document.getElementById('prompt-box-good');
+            const btnB = document.getElementById('btn-prompt-bad');
+            const btnG = document.getElementById('btn-prompt-good');
+            const comment = document.getElementById('prompt-comment');
+
+            if (mode === 'bad') {
+                bB.classList.remove('hidden');
+                bG.classList.add('hidden');
+                btnB.className = "flex-1 py-2 text-xs font-semibold rounded-md transition duration-150 bg-slate-900 text-roseAccent";
+                btnG.className = "flex-1 py-2 text-xs font-semibold rounded-md transition duration-150 text-slate-400";
+                comment.innerHTML = `<i class="fa-solid fa-circle-exclamation text-roseAccent mr-1"></i> Simple inputs yield general, broad responses lacking tactical context or custom guidelines.`;
+            } else {
+                bB.classList.add('hidden');
+                bG.classList.remove('hidden');
+                btnB.className = "flex-1 py-2 text-xs font-semibold rounded-md transition duration-150 text-slate-400";
+                btnG.className = "flex-1 py-2 text-xs font-semibold rounded-md transition duration-150 bg-slate-900 text-emeraldAccent";
+                comment.innerHTML = `<i class="fa-solid fa-circle-check text-emeraldAccent mr-1"></i> Context structures restrict formatting borders, yielding precise answers fitting system metrics.`;
+            }
+        }
+
+        // --- CHAPTER 6: API SIMULATOR PAYLOAD BUILDER ---
+        function updateApiSimulator() {
+            const model = document.getElementById('api-model').value;
+            const temp = document.getElementById('api-temp').value;
+            const sys = document.getElementById('api-sys').value;
+            const usr = document.getElementById('api-usr').value;
+
+            document.getElementById('temp-val').innerText = temp;
+
+            const payload = {
+                model: model,
+                messages: [
+                    { role: "system", content: sys },
+                    { role: "user", content: usr }
+                ],
+                temperature: parseFloat(temp),
+                max_tokens: 256,
+                stream: true
+            };
+
+            document.getElementById('api-json-payload').innerText = JSON.stringify(payload, null, 2);
+        }
+
+        // --- PATH THREE: ML NEURAL SIMULATOR ---
+        let mlEpoch = 0;
+        let mlLoss = 0.824;
+        let mlWeight = 0.542;
+        let mlBias = 0.120;
+
+        function runTrainingEpoch() {
+            const lr = parseFloat(document.getElementById('ml-lr').value);
+            mlEpoch += 1;
+            
+            // Adjust mathematical loss decay curves
+            mlLoss = Math.max(0.015, mlLoss - (mlLoss * lr * 0.45) + (Math.random() - 0.5) * 0.01);
+            mlWeight = mlWeight - (mlWeight * lr * 0.12) + (Math.random() - 0.5) * 0.005;
+            mlBias = mlBias + (lr * 0.05) + (Math.random() - 0.5) * 0.002;
+
+            // Trigger visual neural pulse connection
+            const pulse = document.getElementById('ml-pulse');
+            if (pulse) {
+                pulse.className = "absolute h-3 w-3 rounded-full bg-emeraldAccent -top-0.5 left-0 transition-all duration-300 ease-in-out";
+                setTimeout(() => {
+                    pulse.style.left = "100%";
+                }, 10);
+                setTimeout(() => {
+                    pulse.className = "absolute h-2.5 w-2.5 rounded-full bg-cyanAccent -top-0.5 animate-ping";
+                    pulse.style.left = "0";
+                    pulse.style.transition = "none";
+                }, 310);
+            }
+
+            document.getElementById('ml-epoch-val').innerText = mlEpoch;
+            document.getElementById('ml-loss-val').innerText = mlLoss.toFixed(3);
+            document.getElementById('ml-weight-label').innerText = `w: ${mlWeight.toFixed(3)}`;
+            document.getElementById('ml-bias-label').innerText = `b: ${mlBias.toFixed(3)}`;
+        }
+
+        function resetMlSim() {
+            mlEpoch = 0;
+            mlLoss = 0.824;
+            mlWeight = 0.542;
+            mlBias = 0.120;
+
+            document.getElementById('ml-epoch-val').innerText = mlEpoch;
+            document.getElementById('ml-loss-val').innerText = mlLoss.toFixed(3);
+            document.getElementById('ml-weight-label').innerText = `w: ${mlWeight.toFixed(3)}`;
+            document.getElementById('ml-bias-label').innerText = `b: ${mlBias.toFixed(3)}`;
+        }
+
+        // --- CHAPTER 8: TOKENIZER PLAYGROUND METRICS ---
+        function tokenizeText() {
+            const raw = document.getElementById('tokenizer-input').value;
+            const visual = document.getElementById('tokenized-output-visual');
+            const charCount = document.getElementById('char-count-val');
+            const tokenCount = document.getElementById('token-count-val');
+
+            charCount.innerText = raw.length;
+            if (raw.trim() === "") {
+                visual.innerHTML = `<span class="text-slate-600">Enter custom strings above...</span>`;
+                tokenCount.innerText = 0;
+                return;
+            }
+
+            // Slice raw strings dynamically
+            const segments = raw.match(/\w+|\s+|[^\w\s]+/g) || [];
+            tokenCount.innerText = segments.length;
+
+            const borderSet = [
+                'bg-cyanAccent/10 border-cyanAccent/30 text-cyanAccent',
+                'bg-purpleAccent/10 border-purpleAccent/30 text-purpleAccent',
+                'bg-emeraldAccent/10 border-emeraldAccent/30 text-emeraldAccent',
+                'bg-roseAccent/10 border-roseAccent/30 text-roseAccent'
+            ];
+
+            let html = "";
+            segments.forEach((seg, idx) => {
+                const colors = borderSet[idx % borderSet.length];
+                const clean = seg.replace(/\s/g, '•'); // Replace whitespace with bullet character for clarity
+                html += `
+                    <span class="inline-block px-2 py-1 rounded border ${colors} text-xs relative group cursor-help">
+                        ${clean}
+                        <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 hidden group-hover:block bg-slate-950 border border-slate-700 text-[9px] font-mono text-white px-2 py-0.5 rounded shadow-lg z-10 whitespace-nowrap">
+                            Token ID: ${3000 + (seg.charCodeAt(0) || 0) * 11}
+                        </span>
+                    </span>
+                `;
+            });
+
+            visual.innerHTML = html;
+        }
+
+        // --- CHAPTER 11: GAMIFIED STUDY PROGRESS TRACKER ---
+        function calcStudyProgress() {
+            const checkboxes = document.querySelectorAll('#action-plan input[type="checkbox"]');
+            let completed = 0;
+            const total = 220;
+
+            checkboxes.forEach(chk => {
+                if (chk.checked) completed += parseInt(chk.value);
+            });
+
+            const percentage = Math.round((completed / total) * 100);
+
+            // Update DOM progress labels
+            document.getElementById('study-percent-text').innerText = `${percentage}%`;
+            document.getElementById('study-hours-text').innerText = `${completed} / ${total}`;
+
+            // Update circular SVG path offset
+            const circle = document.getElementById('study-progress-circle');
+            if (circle) {
+                const radius = 54;
+                const circumference = 2 * Math.PI * radius;
+                const offset = circumference - (percentage / 100) * circumference;
+                circle.style.strokeDashoffset = offset;
+            }
+
+            // Update training status levels
+            const status = document.getElementById('study-status-text');
+            if (percentage === 0) {
+                status.innerText = "Uninitialized";
+                status.className = "text-[10px] font-mono font-bold uppercase text-slate-500 mt-1 inline-block px-2 py-0.5 rounded bg-slate-900 border border-slate-800";
+            } else if (percentage > 0 && percentage < 40) {
+                status.innerText = "AI Apprentice";
+                status.className = "text-[10px] font-mono font-bold uppercase text-purpleAccent mt-1 inline-block px-2 py-0.5 rounded bg-purpleAccent/10 border border-purpleAccent/20";
+            } else if (percentage >= 40 && percentage < 80) {
+                status.innerText = "Systems Integrator";
+                status.className = "text-[10px] font-mono font-bold uppercase text-cyanAccent mt-1 inline-block px-2 py-0.5 rounded bg-cyanAccent/10 border border-cyanAccent/20";
+            } else {
+                status.innerText = "ML Systems Architect";
+                status.className = "text-[10px] font-mono font-bold uppercase text-emeraldAccent mt-1 inline-block px-2 py-0.5 rounded bg-emeraldAccent/10 border border-emeraldAccent/20";
+            }
+        }
+    </script>
+</body>
+</html>
