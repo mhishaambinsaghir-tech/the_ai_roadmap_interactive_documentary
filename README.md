@@ -255,7 +255,7 @@ Open the project in your browser and use the navigation controls or scroll throu
 
 ## 🌐 Live Demo
 
-**[View the Interactive Presentation](YOUR_LIVE_DEMO_URL)**
+**[View the Interactive Presentation](http://mhishaambinsaghir-tech.github.io/the_ai_roadmap_interactive_documentary)**
 
 > Replace `YOUR_LIVE_DEMO_URL` with the deployed GitHub Pages / Vercel / Netlify URL.
 
@@ -328,25 +328,9 @@ The presentation is primarily aimed at:
 * Students exploring AI career paths
 * Beginners deciding what area of AI to pursue
 
----
-
-## 📜 License
-
-Add your preferred license here.
-
-For example:
-
-```text
-MIT License
-```
-
----
-
 ## 👤 Author
 
 **Muhammad Hisham**
 
 AI & Software Developer
 Python Instructor
-
-[GitHub](YOUR_GITHUB_URL) · [Portfolio](YOUR_PORTFOLIO_URL) · [LinkedIn](YOUR_LINKEDIN_URL)
