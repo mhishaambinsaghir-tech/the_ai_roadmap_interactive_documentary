@@ -255,9 +255,9 @@ Open the project in your browser and use the navigation controls or scroll throu
 
 ## 🌐 Live Demo
 
-**[View the Interactive Presentation](http://mhishaambinsaghir-tech.github.io/the_ai_roadmap_interactive_documentary)**
+**[View the Interactive Presentation]**
 
-> Replace `YOUR_LIVE_DEMO_URL` with the deployed GitHub Pages / Vercel / Netlify URL.
+> http://mhishaambinsaghir-tech.github.io/the_ai_roadmap_interactive_documentary
 
 ---
 
